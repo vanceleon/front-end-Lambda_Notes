@@ -15,9 +15,9 @@ class SingleNote extends Component {
 
   componentDidMount() {
 
-    const url = "http://localhost:8000/notes";
+    const url = "https://killer-notes.herokuapp.com";
     axios
-      .get(`${url}/${this.props.match.params.id}`)
+      .get(`${url}/note/get/${this.props.match.params.id}`)
       .then(response => {
         console.log('response:', response.data);
         this.setState({ note: response.data });

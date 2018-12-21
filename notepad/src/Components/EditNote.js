@@ -18,7 +18,7 @@ const EditNote = props => {
         name="content"
         placeholder="Note Content"
         onChange={props.onChange}
-        value={props.content}
+        value={props.textBody}
       />
       {/* <Link to="/notes"> */}
       <div onClick={event => props.editNote(event, props.match.params.id, props.history.push)} className="save-button">Save</div>

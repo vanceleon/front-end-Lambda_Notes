@@ -14,14 +14,15 @@ const NoteList = props => {
       <h2 className="note-container-title">Your Notes:</h2>
       <div className="note-cards">
         {props.notes.map(note  => {
+          {/* console.log("notes id", note._id); */}
           return (
             <React.Fragment>
               {/* <Note key={props.id} note={note} getById={props.getById}/> */}
               <div key={note.id}>
-                <Link to={`/notes/${note.id}`} className="note-link">
-                  <div className="note" onClick={() => props.getById(note.id)}>
+                <Link to={`/notes/${note._id}`} className="note-link">
+                  <div className="note" onClick={() => props.getById(note._id)}>
                     <div className="note-header">{note.title}</div>
-                    <div className="note-content">{note.content}</div>
+                    <div className="note-content">{note.textBody}</div>
                   </div>
                 </Link>
               </div>

@@ -9,14 +9,14 @@ import DeleteNote from "./Components/DeleteNote";
 import EditNote from "./Components/EditNote";
 // import { runInThisContext } from "vm";
 
-const url = "http://localhost:8000/notes";
+const url = "https://killer-notes.herokuapp.com";
 
 class App extends Component {
   state = {
     notes: [],
     note: {},
     title: "",
-    content: ""
+    textbody: ""
   };
 
   onChange = event => {
@@ -34,14 +34,14 @@ class App extends Component {
   }
 
   getAllNotes = () => {
-    return axios.get(url);
+    return axios.get(`${url}/note/get/all`);
   };
 
   getByID = id => {
     // event.preventDefault();
     // const id = this.state.id;
     axios
-      .get(`${url}/${id}`)
+      .get(`${url}/note/get/${id}`)
       .then(response => {
         this.setState({ note: response.data });
       })
@@ -52,17 +52,17 @@ class App extends Component {
     event.preventDefault();
     const newNoteInfo = {
       title: this.state.title,
-      content: this.state.content
+      textbody: this.state.textbody
     };
     axios
-      .post(url, newNoteInfo)
-      .then(response => {
+      .post(`${url}/note/create`, newNoteInfo)
+      .then(() => {
         this.getAllNotes()
           .then(response => {
             this.setState({
               notes: response.data
             });
-            push(`/notes`);
+            push(`/note/get/all`);
           })
           .catch(err => console.log("Error: ", err));
       })
@@ -78,18 +78,18 @@ class App extends Component {
     //   if (note.id == id){
     //     console.log(id)
     //     if(this.state.title) updateNote.title = this.state.title;
-    //     if(this.state.content) updateNote.content = this.state.content;
+    //     if(this.state.textbody) updateNote.textbody = this.state.textbody;
     //     return updateNote;
     //   }
     // })
 
     const updateNote = {
       title: this.state.title,
-      content: this.state.content
+      textbody: this.state.textbody
     };
 
     axios
-      .put(`${url}/edit/${id}`, updateNote)
+      .put(`${url}/note/edit/${id}`, updateNote)
       .then(response => {
         this.getAllNotes()
           .then(response => {
@@ -109,7 +109,7 @@ class App extends Component {
     // })
     // const deleteNote = {
     //   title: this.state.title,
-    //   content: this.state.content
+    //   textbody: this.state.textbody
     // };
 
     axios
@@ -165,7 +165,7 @@ class App extends Component {
                   newNote={this.newNote}
                   id={this.state.id}
                   title={this.state.title}
-                  content={this.state.content}
+                  textbody={this.state.textbody}
                 />
               );
             }}

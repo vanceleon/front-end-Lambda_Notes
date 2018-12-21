@@ -19,7 +19,7 @@ const NoteForm = props => {
           type="textarea"
           name="content"
           placeholder="Note Content"
-          value={props.content}
+          value={props.textBody}
           onChange={props.noteChange}
         />
         
