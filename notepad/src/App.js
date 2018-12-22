@@ -43,7 +43,10 @@ class App extends Component {
     axios
       .get(`${url}/note/get/${id}`)
       .then(response => {
-        this.setState({ note: response.data });
+        this.setState(
+          { note: response.data },
+          console.log(`${this.state.title} ${this.state.textbody}`)
+        );
       })
       .catch(error => console.log("Error: ", error));
   };
@@ -51,12 +54,15 @@ class App extends Component {
   newNote = (event, push) => {
     event.preventDefault();
     const newNoteInfo = {
+      tags: [],
       title: this.state.title,
-      textbody: this.state.textbody
+      textBody: this.state.textbody
     };
     axios
       .post(`${url}/note/create`, newNoteInfo)
-      .then(() => {
+      .then(res => {
+        console.log("this is new Note", newNoteInfo);
+        console.log("this is response from server", res.data);
         this.getAllNotes()
           .then(response => {
             this.setState({
@@ -78,23 +84,24 @@ class App extends Component {
     //   if (note.id == id){
     //     console.log(id)
     //     if(this.state.title) updateNote.title = this.state.title;
-    //     if(this.state.textbody) updateNote.textbody = this.state.textbody;
+    //     if(this.state.textBody) updateNote.textBody = this.state.textBody;
     //     return updateNote;
     //   }
     // })
 
     const updateNote = {
       title: this.state.title,
-      textbody: this.state.textbody
+      textBody: this.state.textbody
     };
 
     axios
       .put(`${url}/note/edit/${id}`, updateNote)
       .then(response => {
+        console.log("edit note", updateNote);
         this.getAllNotes()
           .then(response => {
             this.setState({ notes: response.data });
-            push(`/edit/${id}`);
+            push(`/notes`);
           })
           .catch(err => console.log(err));
       })
@@ -109,16 +116,16 @@ class App extends Component {
     // })
     // const deleteNote = {
     //   title: this.state.title,
-    //   textbody: this.state.textbody
+    //   textBody: this.state.textBody
     // };
 
     axios
-      .delete(`${url}/${id}/delete`)
+      .delete(`${url}/note/delete/${id}`)
       .then(response => {
         this.getAllNotes()
           .then(response => {
             this.setState({ notes: response.data });
-            push(`/${id}/delete`);
+            push(`/notes`);
           })
           .catch(err => console.log(err));
       })
@@ -133,11 +140,11 @@ class App extends Component {
           <aside className="sidebar-left">
             <h1>Lambda Notes</h1>
             <Link to={"/notes"} className="links">
-            <div className="view-notes">View Your Notes</div>
-          </Link>
-          <Link to={"/noteform"} className="links">
-            <div className="new-note">Create New Note</div>
-          </Link>
+              <div className="view-notes">View Your Notes</div>
+            </Link>
+            <Link to={"/noteform"} className="links">
+              <div className="new-note">Create New Note</div>
+            </Link>
           </aside>
         </div>
         <div className="notes-container">
@@ -165,7 +172,7 @@ class App extends Component {
                   newNote={this.newNote}
                   id={this.state.id}
                   title={this.state.title}
-                  textbody={this.state.textbody}
+                  textBody={this.state.textBody}
                 />
               );
             }}
@@ -189,6 +196,8 @@ class App extends Component {
               return (
                 <EditNote
                   {...props}
+                  title={this.state.title}
+                  textbody={this.state.textbody}
                   onChange={this.onChange}
                   editNote={this.editNote}
                 />

@@ -16,9 +16,9 @@ const NoteList = props => {
         {props.notes.map(note  => {
           {/* console.log("notes id", note._id); */}
           return (
-            <React.Fragment>
+            <React.Fragment key={note._id}>
               {/* <Note key={props.id} note={note} getById={props.getById}/> */}
-              <div key={note.id}>
+              <div>
                 <Link to={`/notes/${note._id}`} className="note-link">
                   <div className="note" onClick={() => props.getById(note._id)}>
                     <div className="note-header">{note.title}</div>

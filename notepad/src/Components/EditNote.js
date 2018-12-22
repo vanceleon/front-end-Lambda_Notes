@@ -2,6 +2,7 @@ import React from "react";
 // import { Link } from "react-router-dom";
 
 const EditNote = props => {
+  console.log(`${props.title} ${props.textbody}`);
   return (
     <form className="editNote-container">
       <input
@@ -15,10 +16,10 @@ const EditNote = props => {
       <input
         className="note-content-input"
         type="text"
-        name="content"
+        name="textbody"
         placeholder="Note Content"
         onChange={props.onChange}
-        value={props.textBody}
+        value={props.textbody}
       />
       {/* <Link to="/notes"> */}
       <div onClick={event => props.editNote(event, props.match.params.id, props.history.push)} className="save-button">Save</div>
