@@ -10,7 +10,8 @@ const NoteList = props => {
     );
   }
   return (
-    <React.Fragment>
+    // <React.Fragment> container without generating a div
+    <React.Fragment> 
       <h2 className="note-container-title">Your Notes:</h2>
       <div className="note-cards">
         {props.notes.map(note  => {
